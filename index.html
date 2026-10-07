@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Debate Cívico · Cierre Ordenado de Cobre Panamá</title>
+<meta name="description" content="Simulación de debate cívico sobre el cierre ordenado de la mina Cobre Panamá: aspectos ambientales, sociales, económicos y jurídicos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b1210;--bg2:#101b17;--card:#14221d;--card2:#193028;--line:#24403468;
+  --text:#e9f3ee;--muted:#9bb5a9;--accent:#3ddc97;--accent2:#f5b942;--accent3:#5bb8ff;--danger:#ff6b6b;
+  --shadow:0 20px 50px -20px #000a;--radius:18px;--nav-h:68px;--side-w:260px;
+}
+:root[data-theme="light"]{
+  --bg:#f4f8f5;--bg2:#e9f1ec;--card:#ffffff;--card2:#eef5f1;--line:#cfe0d6;
+  --text:#102019;--muted:#4e6b5e;--accent:#0f9d62;--accent2:#c98a0a;--accent3:#1b7fc4;--danger:#d94a4a;
+  --shadow:0 20px 40px -22px #0a3a2455;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 16px)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden;transition:background .3s,color .3s}
+h1,h2,h3{font-family:'Fraunces',serif;line-height:1.15;letter-spacing:-.01em}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+img,iframe{max-width:100%}
+#progress{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));z-index:200;transition:width .1s}
+
+/* NAV */
+nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(14px,3vw,36px);background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:800;font-size:1.15rem;color:var(--text)}
+.brand .logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--accent),var(--accent3));display:grid;place-items:center;color:#06231a;font-size:1.2rem;box-shadow:0 6px 18px -6px var(--accent)}
+.menu{display:flex;gap:4px;list-style:none;align-items:center}
+.menu a{color:var(--muted);padding:8px 12px;border-radius:10px;font-size:.9rem;font-weight:500;transition:.2s}
+.menu a:hover,.menu a.active{background:var(--card);color:var(--text);text-decoration:none}
+.nav-actions{display:flex;gap:8px;align-items:center}
+.icon-btn{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer;font-size:1.05rem;display:grid;place-items:center;transition:.2s}
+.icon-btn:hover{transform:translateY(-2px);border-color:var(--accent)}
+#burger{display:none}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;padding:calc(var(--nav-h) + 50px) clamp(18px,5vw,70px) 70px;display:grid;align-items:center;overflow:hidden;background:radial-gradient(1200px 600px at 80% -10%,#3ddc9722,transparent 60%),radial-gradient(900px 500px at 0% 100%,#5bb8ff22,transparent 60%),var(--bg)}
+#bg-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.55;pointer-events:none}
+.hero-inner{position:relative;max-width:1100px;margin:auto;text-align:center;z-index:2}
+.badge{display:inline-flex;gap:8px;align-items:center;padding:7px 16px;border-radius:99px;background:var(--card);border:1px solid var(--line);font-size:.82rem;color:var(--muted);margin-bottom:22px}
+.badge i{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px #3ddc9700}100%{box-shadow:0 0 0 0 #3ddc9700}}
+.hero h1{font-size:clamp(2.2rem,6vw,4.6rem);font-weight:800;margin-bottom:18px}
+.grad{background:linear-gradient(100deg,var(--accent),var(--accent3) 55%,var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:clamp(1rem,2vw,1.25rem);color:var(--muted);max-width:760px;margin:0 auto 14px}
+.typing{font-family:'JetBrains Mono',monospace;color:var(--accent);min-height:1.7em;font-size:1rem;margin-bottom:30px}
+.typing::after{content:"▍";animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:46px}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 24px;border-radius:14px;font-weight:600;font-size:.95rem;border:1px solid transparent;cursor:pointer;transition:.25s;font-family:inherit}
+.btn:hover{transform:translateY(-3px);text-decoration:none}
+.btn.primary{background:linear-gradient(135deg,var(--accent),#22b97a);color:#05231a;box-shadow:0 12px 28px -10px var(--accent)}
+.btn.ghost{background:var(--card);border-color:var(--line);color:var(--text)}
+.btn.wa{background:#25d366;color:#04230f}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;max-width:820px;margin:auto}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 10px}
+.stat b{display:block;font-family:'Fraunces',serif;font-size:2.1rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:var(--side-w) minmax(0,1fr);gap:34px;max-width:1380px;margin:0 auto;padding:60px clamp(14px,3vw,36px)}
+aside.side{position:sticky;top:calc(var(--nav-h) + 20px);align-self:start;display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - var(--nav-h) - 40px);overflow:auto}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.panel h4{font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:12px}
+.toc{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc a{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;color:var(--muted);font-size:.9rem;border-left:3px solid transparent}
+.toc a:hover{background:var(--card2);text-decoration:none;color:var(--text)}
+.toc a.active{background:var(--card2);color:var(--text);border-left-color:var(--accent);font-weight:600}
+.mini-people{display:flex;flex-direction:column;gap:10px}
+.person{display:flex;gap:10px;align-items:center;font-size:.85rem}
+.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:.8rem;color:#06231a;flex:none}
+.person small{display:block;color:var(--muted);font-size:.72rem}
+.read-time{font-size:.85rem;color:var(--muted)}
+
+main section{margin-bottom:76px}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.sec-head .num{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:.85rem;background:var(--card);border:1px solid var(--line);padding:5px 10px;border-radius:9px}
+.sec-head h2{font-size:clamp(1.6rem,3.2vw,2.3rem)}
+.lead2{color:var(--muted);margin-bottom:22px;max-width:760px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.rule{display:flex;gap:12px;align-items:flex-start;padding:16px;background:var(--card);border:1px solid var(--line);border-radius:14px;transition:.25s}
+.rule:hover{transform:translateY(-4px);border-color:var(--accent)}
+.rule .ic{font-size:1.5rem}
+.quote{border-left:4px solid var(--accent2);padding:14px 18px;background:var(--card2);border-radius:0 14px 14px 0;color:var(--text);font-style:italic;margin:16px 0}
+
+/* tabs */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tab{padding:10px 18px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;font-weight:600;font-family:inherit;font-size:.9rem;transition:.2s}
+.tab.on{background:linear-gradient(135deg,var(--accent),#22b97a);color:#05231a;border-color:transparent}
+.tab-panel{display:none;animation:fade .4s}
+.tab-panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}}
+.pos{padding:14px 18px;border-radius:14px;background:var(--card2);border:1px dashed var(--accent);margin-bottom:16px;font-weight:500}
+.arg{padding:16px 18px;border-radius:14px;background:var(--card);border:1px solid var(--line);margin-bottom:12px}
+.arg h3{font-size:1.05rem;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.arg h3 span{font-family:'JetBrains Mono',monospace;font-size:.7rem;background:var(--accent);color:#05231a;padding:3px 8px;border-radius:7px}
+.src{display:inline-block;margin-top:8px;font-size:.78rem;color:var(--accent3)}
+
+/* chat */
+.chat{display:flex;flex-direction:column;gap:14px}
+.msg{display:flex;gap:12px;max-width:88%;opacity:0;transform:translateY(16px);transition:.5s}
+.msg.show{opacity:1;transform:none}
+.msg.right{align-self:flex-end;flex-direction:row-reverse}
+.bubble{padding:14px 18px;border-radius:18px;background:var(--card);border:1px solid var(--line)}
+.msg.right .bubble{background:var(--card2)}
+.bubble b{display:block;font-size:.78rem;margin-bottom:4px}
+.bubble p{font-size:.95rem}
+
+/* accordion */
+.acc{border:1px solid var(--line);border-radius:14px;margin-bottom:12px;background:var(--card);overflow:hidden}
+.acc button{width:100%;text-align:left;background:none;border:0;color:var(--text);padding:18px 20px;font-size:1rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;gap:12px;font-family:inherit}
+.acc button::after{content:"＋";color:var(--accent);transition:.3s}
+.acc.open button::after{transform:rotate(135deg)}
+.acc .body{max-height:0;overflow:hidden;transition:max-height .45s ease;padding:0 20px}
+.acc.open .body{padding-bottom:18px}
+.who{font-size:.78rem;color:var(--accent2);font-weight:600;margin-bottom:6px}
+
+/* video */
+.video{position:relative;padding-top:56.25%;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#000}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* check table */
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{padding:13px 12px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em}
+.chk{width:22px;height:22px;accent-color:var(--accent);cursor:pointer}
+.meter{height:12px;background:var(--card2);border-radius:99px;overflow:hidden;margin-top:14px}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .6s}
+
+/* sources */
+.src-item{display:flex;gap:14px;align-items:flex-start;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--card);margin-bottom:12px;transition:.2s}
+.src-item:hover{border-color:var(--accent3);transform:translateX(4px)}
+
+/* footer */
+footer{background:var(--bg2);border-top:1px solid var(--line);padding:50px clamp(18px,5vw,70px) 28px;margin-top:20px}
+.foot-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px}
+footer h4{margin-bottom:12px;font-family:'Fraunces',serif}
+footer p,footer li{color:var(--muted);font-size:.9rem}
+footer ul{list-style:none;display:grid;gap:7px}
+.copy{max-width:1200px;margin:34px auto 0;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.8rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+/* floating */
+.wa-float{position:fixed;right:22px;bottom:22px;z-index:150;display:flex;align-items:center;gap:10px;background:#25d366;color:#04230f;padding:13px 20px;border-radius:99px;font-weight:700;box-shadow:0 14px 34px -8px #25d366aa;animation:bob 3s ease-in-out infinite}
+.wa-float:hover{text-decoration:none;transform:scale(1.06)}
+.wa-float svg{width:26px;height:26px}
+@keyframes bob{50%{transform:translateY(-6px)}}
+#toTop{position:fixed;left:22px;bottom:22px;z-index:150;opacity:0;pointer-events:none;transition:.3s}
+#toTop.show{opacity:1;pointer-events:auto}
+
+.reveal{opacity:0;transform:translateY(26px);transition:.7s}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:1000px){
+  .layout{grid-template-columns:1fr}
+  aside.side{position:static;max-height:none;order:-1}
+  .menu{position:fixed;top:var(--nav-h);left:0;right:0;flex-direction:column;background:var(--bg);padding:14px;border-bottom:1px solid var(--line);transform:translateY(-130%);transition:.35s;align-items:stretch}
+  .menu.open{transform:none}
+  #burger{display:grid}
+  .msg{max-width:100%}
+  .wa-float span{display:none}
+  .wa-float{padding:14px}
+  .bar-row{grid-template-columns:84px 1fr 40px}
+}
+@media print{nav.top,.wa-float,#toTop,aside.side,#progress{display:none}.layout{display:block}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav class="top">
+  <a class="brand" href="#inicio"><span class="logo">⚖</span> Debate Cívico</a>
+  <ul class="menu" id="menu">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#reglas">Reglas</a></li>
+    <li><a href="#posiciones">Posiciones</a></li>
+    <li><a href="#debate">Debate</a></li>
+    <li><a href="#preguntas">Preguntas</a></li>
+    <li><a href="#fuentes">Fuentes</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="icon-btn" id="themeBtn" title="Cambiar tema" aria-label="Cambiar tema">🌙</button>
+    <button class="icon-btn" id="burger" aria-label="Menú">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="inicio">
+  <canvas id="bg-canvas"></canvas>
+  <div class="hero-inner">
+    <div class="badge"><i></i> Simulación de debate cívico · Tema de interés nacional</div>
+    <h1>Cierre ordenado de <span class="grad">Cobre Panamá</span></h1>
+    <p class="lead">¿Cómo debería Panamá gestionar el cierre ordenado del proyecto, considerando los aspectos ambientales, sociales, económicos y jurídicos?</p>
+    <div class="typing" id="typing"></div>
+    <div class="cta">
+      <a class="btn primary" href="#debate">▶ Ver el debate</a>
+      <a class="btn ghost" href="#video">🎬 Grabación</a>
+      <a class="btn wa" href="https://wa.me/50767600882?text=Hola%2C%20vi%20el%20debate%20c%C3%ADvico%20sobre%20Cobre%20Panam%C3%A1" target="_blank" rel="noopener">💬 WhatsApp</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b data-count="4">0</b><span>Dimensiones analizadas</span></div>
+      <div class="stat"><b data-count="2">0</b><span>Posiciones en debate</span></div>
+      <div class="stat"><b data-count="8">0</b><span>Argumentos centrales</span></div>
+      <div class="stat"><b data-count="3">0</b><span>Preguntas del moderador</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="side">
+    <div class="panel">
+      <h4>Contenido</h4>
+      <ul class="toc" id="toc">
+        <li><a href="#tema">🎯 Tema central</a></li>
+        <li><a href="#reglas">📜 Reglas</a></li>
+        <li><a href="#posiciones">🗣 Posiciones</a></li>
+        <li><a href="#debate">💬 Debate</a></li>
+        <li><a href="#preguntas">❓ Preguntas</a></li>
+        <li><a href="#observador">👁 Observador</a></li>
+        <li><a href="#conclusion">🏁 Conclusión</a></li>
+        <li><a href="#video">🎬 Grabación</a></li>
+        <li><a href="#evaluacion">✅ Evaluación</a></li>
+        <li><a href="#fuentes">🔗 Fuentes</a></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h4>Participantes</h4>
+      <div class="mini-people">
+        <div class="person"><div class="avatar" style="background:var(--accent)">AR</div><div>Ariatnee Ramos<small>Participante A</small></div></div>
+        <div class="person"><div class="avatar" style="background:var(--accent2)">LR</div><div>Lariza Rodríguez<small>Participante B</small></div></div>
+        <div class="person"><div class="avatar" style="background:var(--accent3)">RG</div><div>Rafael González<small>Observador 1</small></div></div>
+        <div class="person"><div class="avatar" style="background:#c79bff">Y</div><div>Yuleimy<small>Cerradora</small></div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h4>Lectura</h4>
+      <p class="read-time">⏱ <span id="readTime">–</span> min · <span id="pct">0</span>% completado</p>
+      <div class="meter"><i id="readMeter"></i></div>
+    </div>
+    <a class="btn wa" style="justify-content:center" href="https://wa.me/50767600882" target="_blank" rel="noopener">💬 Escríbenos</a>
+  </aside>
+
+  <main id="content">
+    <section id="tema" class="reveal">
+      <div class="sec-head"><span class="num">01</span><h2>Tema central del debate</h2></div>
+      <div class="card">
+        <p style="font-size:1.1rem">¿Cómo debería Panamá gestionar el cierre ordenado del proyecto Cobre Panamá, considerando los aspectos ambientales, sociales, económicos y jurídicos?</p>
+        <div class="quote">“Nuestro objetivo no es determinar quién tiene la razón de manera personal, sino comprender las diferentes perspectivas y los factores que deben considerarse en una decisión pública.”</div>
+        <div class="grid g3" style="margin-top:18px">
+          <div class="rule"><span class="ic">🌿</span><div><b>Ambiental</b><br><small>Monitoreo, seguridad del sitio, restauración.</small></div></div>
+          <div class="rule"><span class="ic">⚖️</span><div><b>Jurídico</b><br><small>Ley 406 y decisión de la Corte Suprema.</small></div></div>
+          <div class="rule"><span class="ic">💰</span><div><b>Económico</b><br><small>Costos, empleo, proveedores, finanzas públicas.</small></div></div>
+          <div class="rule"><span class="ic">🏘</span><div><b>Social</b><br><small>Comunidades y trabajadores.</small></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reglas" class="reveal">
+      <div class="sec-head"><span class="num">02</span><h2>Reglas del moderador</h2></div>
+      <p class="lead2">El moderador dio la bienvenida y estableció las reglas principales para el desarrollo del debate.</p>
+      <div class="grid g2">
+        <div class="rule"><span class="ic">⏳</span><div>Respetar el turno de palabra.</div></div>
+        <div class="rule"><span class="ic">🤫</span><div>No interrumpir a los demás participantes.</div></div>
+        <div class="rule"><span class="ic">🔎</span><div>Utilizar información verificable.</div></div>
+        <div class="rule"><span class="ic">📊</span><div>Diferenciar los hechos de las opiniones.</div></div>
+        <div class="rule"><span class="ic">🚫</span><div>Evitar ataques personales.</div></div>
+        <div class="rule"><span class="ic">👂</span><div>Escuchar las posiciones contrarias.</div></div>
+        <div class="rule" style="grid-column:1/-1"><span class="ic">🧠</span><div>Responder los argumentos con argumentos y evidencias.</div></div>
+      </div>
+    </section>
+
+    <section id="posiciones" class="reveal">
+      <div class="sec-head"><span class="num">03</span><h2>Posiciones y argumentos</h2></div>
+      <div class="tabs" role="tablist">
+        <button class="tab on" data-tab="pa">Participante A · Ariatnee Ramos</button>
+        <button class="tab" data-tab="pb">Participante B · Lariza Rodríguez</button>
+      </div>
+
+      <div class="tab-panel on" id="pa">
+        <div class="pos">El proceso debe priorizar un cierre ordenado con énfasis en la seguridad ambiental, el cumplimiento jurídico y la supervisión independiente.</div>
+        <div class="arg"><h3><span>ARG 1</span> Protección ambiental</h3><p>Un proceso de cierre no consiste simplemente en detener la extracción. Existen instalaciones, materiales, agua de contacto, estructuras y áreas intervenidas que requieren vigilancia y manejo técnico.</p><p style="margin-top:8px">El informe oficial de septiembre de 2026 señala que actualmente no hay extracción minera en curso y que el sitio se encuentra bajo un plan de preservación ordenado por el Estado.</p><span class="src">📎 MiAmbiente – Ministerio de Ambiente</span></div>
+        <div class="arg"><h3><span>ARG 2</span> Cumplimiento jurídico</h3><p>La decisión de la Corte Suprema de Justicia sobre la Ley 406 constituye un elemento jurídico fundamental que debe ser considerado en cualquier alternativa futura.</p></div>
+        <div class="arg"><h3><span>ARG 3</span> Transparencia</h3><p>Las decisiones sobre un proyecto de esta magnitud deben estar acompañadas de información pública, mecanismos de fiscalización y resultados verificables.</p></div>
+        <div class="arg"><h3><span>ARG 4</span> Participación ciudadana</h3><p>La ciudadanía y las comunidades cercanas pueden aportar información y realizar observación social del proceso.</p></div>
+      </div>
+
+      <div class="tab-panel" id="pb">
+        <div class="pos">Además de las obligaciones ambientales y jurídicas, cualquier proceso debe analizar cuidadosamente sus consecuencias económicas y sociales, buscando mecanismos que permitan atender a trabajadores y comunidades y administrar los costos para el país.</div>
+        <div class="arg"><h3><span>ARG 1</span> Impacto económico</h3><p>Las decisiones relacionadas con el sitio pueden tener consecuencias económicas importantes. Por eso, cualquier alternativa debe estar acompañada de estudios financieros y económicos.</p></div>
+        <div class="arg"><h3><span>ARG 2</span> Trabajadores</h3><p>El cierre de una actividad económica de gran escala puede afectar directa o indirectamente a trabajadores, contratistas y proveedores.</p></div>
+        <div class="arg"><h3><span>ARG 3</span> Comunidades</h3><p>Las comunidades relacionadas con la actividad necesitan mecanismos de participación y alternativas de desarrollo.</p></div>
+        <div class="arg"><h3><span>ARG 4</span> Costos del proceso</h3><p>El proceso de cierre requiere recursos para mantenimiento, monitoreo, seguridad y recuperación ambiental. El informe de 2026 incluye estimaciones sobre los costos potenciales de determinadas alternativas.</p><span class="src">📎 MiAmbiente – Ministerio de Ambiente</span></div>
+      </div>
+    </section>
+
+    <section id="debate" class="reveal">
+      <div class="sec-head"><span class="num">04</span><h2>Debate entre participantes</h2></div>
+      <p class="lead2">Intercambio entre ambas posturas, moderado en tiempo real. Desplázate para ver cómo aparece cada intervención.</p>
+      <div class="chat" id="chat">
+        <div class="msg"><div class="avatar" style="background:#8aa;">M</div><div class="bubble"><b>Moderador</b><p>Después de haber escuchado sus argumentos, estimada Ariatnee, ¿cuál considera que debería ser la principal prioridad del proceso del cierre ordenado?</p></div></div>
+        <div class="msg right"><div class="avatar" style="background:var(--accent)">AR</div><div class="bubble"><b style="color:var(--accent)">Ariatnee Ramos</b><p>Considero que debe garantizarse primero la seguridad del sitio y la protección ambiental. Un cierre debe ser técnicamente planificado, con monitoreo permanente, restauración progresiva y mecanismos independientes de verificación.</p></div></div>
+        <div class="msg"><div class="avatar" style="background:#8aa;">M</div><div class="bubble"><b>Moderador</b><p>Interesante estimada compañera su aporte, ahora vamos con la otra cara de la moneda: Lariza, cuéntanos ¿qué aspecto considera que debe agregarse a esta perspectiva?</p></div></div>
+        <div class="msg right"><div class="avatar" style="background:var(--accent2)">LR</div><div class="bubble"><b style="color:var(--accent2)">Lariza Rodríguez</b><p>Además de la dimensión ambiental, considero necesario estudiar cuidadosamente los efectos sociales y económicos. Las decisiones deben contemplar a los trabajadores, las comunidades y los costos que pueda asumir el Estado.</p></div></div>
+        <div class="msg right"><div class="avatar" style="background:var(--accent)">AR</div><div class="bubble"><b style="color:var(--accent)">Ariatnee Ramos</b><p>Estoy de acuerdo en que los aspectos sociales y económicos deben analizarse. Sin embargo, considero importante que cualquier consideración económica se realice respetando las obligaciones jurídicas y ambientales.</p></div></div>
+        <div class="msg right"><div class="avatar" style="background:var(--accent2)">LR</div><div class="bubble"><b style="color:var(--accent2)">Lariza Rodríguez</b><p>También considero necesario que exista transparencia sobre los costos, las responsabilidades y los resultados del proceso. La ciudadanía debe poder conocer la información y evaluar el cumplimiento.</p></div></div>
+        <div class="msg"><div class="avatar" style="background:#8aa;">M</div><div class="bubble"><b>Moderador</b><p>Así como lo mencionan ambos exponentes, la importancia de combinar diferentes dimensiones; por eso tengo algunas preguntas.</p></div></div>
+      </div>
+    </section>
+
+    <section id="preguntas" class="reveal">
+      <div class="sec-head"><span class="num">05</span><h2>Preguntas del moderador</h2></div>
+      <div class="acc open">
+        <button>1 · ¿Qué significa realmente un cierre minero ordenado?</button>
+        <div class="body"><div class="who">Responde: Ariatnee</div><p>En palabras sencillas: un cierre minero ordenado busca que la mina deje de operar de manera segura, se controle y reduzca su impacto ambiental, se atiendan las consecuencias para trabajadores y comunidades, y finalmente el sitio pueda quedar bajo condiciones ambientales seguras y verificables, en lugar de simplemente abandonarlo.</p></div>
+      </div>
+      <div class="acc">
+        <button>2 · ¿Por qué es importante el monitoreo ambiental?</button>
+        <div class="body"><div class="who">Responde: Lariza</div><p>Porque permite obtener información sobre el estado del agua, suelo, aire y ecosistemas, identificar posibles riesgos y verificar el cumplimiento de las medidas establecidas. MiAmbiente informó que especialistas realizan este tipo de vigilancia en el área.</p></div>
+      </div>
+      <div class="acc">
+        <button>3 · ¿Es suficiente detener la extracción para considerar cerrada una mina?</button>
+        <div class="body"><div class="who">Responde: Ariatnee</div><p>No necesariamente. El cierre de un proyecto minero implica también actividades de seguridad, estabilización, manejo de agua, monitoreo y recuperación ambiental. El informe de septiembre de 2026 distingue entre la ausencia de extracción y el proceso de preservación y gestión del sitio.</p><span class="src">📎 MiAmbiente – Ministerio de Ambiente</span></div>
+      </div>
+    </section>
+
+    <section id="observador" class="reveal">
+      <div class="sec-head"><span class="num">06</span><h2>Observador 1 · Rafael González</h2></div>
+      <div class="card">
+        <h3 style="margin-bottom:10px">Comentario final</h3>
+        <div class="quote">Durante el debate se presentaron argumentos relacionados principalmente con cuatro dimensiones: ambiental, jurídica, económica y social. Los participantes utilizaron información oficial para respaldar diferentes puntos de vista. También se identificó que el tema requiere analizar varias variables simultáneamente.</div>
+        <div class="quote">Los participantes mantuvieron una conducta respetuosa durante el debate. Se respetaron los turnos de palabra y se utilizaron argumentos relacionados con el tema. No se observaron ataques personales y se permitió la presentación de posiciones diferentes.</div>
+      </div>
+    </section>
+
+    <section id="conclusion" class="reveal">
+      <div class="sec-head"><span class="num">07</span><h2>Conclusión · Yuleimy</h2></div>
+      <div class="grid g2">
+        <div class="card"><h3>🌿 Ambiental</h3><p>Se destacó la importancia del monitoreo, la seguridad del sitio y la restauración progresiva.</p></div>
+        <div class="card"><h3>⚖️ Jurídica</h3><p>Se destacó la importancia de respetar el marco constitucional y la decisión de la Corte Suprema de Justicia sobre la Ley 406.</p></div>
+        <div class="card"><h3>💰 Económica</h3><p>Se señaló la necesidad de evaluar los costos, los efectos sobre el empleo, los proveedores y las finanzas públicas.</p></div>
+        <div class="card"><h3>🏘 Social</h3><p>Se destacó la importancia de considerar a las comunidades, trabajadores y demás personas relacionadas con el proyecto.</p></div>
+      </div>
+      <div class="quote" style="margin-top:20px">El debate permitió observar que una decisión pública de esta magnitud requiere información verificable, transparencia, participación ciudadana y análisis de diferentes consecuencias. Además, es importante distinguir entre los hechos que ya están documentados y las alternativas que todavía deben ser evaluadas por las autoridades correspondientes.</div>
+      <div class="card" style="margin-top:16px;border-color:var(--accent)">
+        <b>Cierre del moderador</b>
+        <p style="margin-top:6px">El propósito de este debate no es solamente expresar una opinión sobre Cobre Panamá, sino demostrar cómo los ciudadanos pueden analizar un asunto público utilizando información, escuchando diferentes perspectivas y participando de manera responsable en la toma de decisiones colectivas. Muchas gracias a todos por acompañarnos.</p>
+      </div>
+    </section>
+
+    <section id="video" class="reveal">
+      <div class="sec-head"><span class="num">08</span><h2>Grabación del proyecto final</h2></div>
+      <div class="video">
+        <iframe src="https://drive.google.com/file/d/12NhGUKLL9lTU9WR_GLisVIVCKxUXId1h/preview" allow="autoplay; fullscreen" allowfullscreen loading="lazy" title="Grabación del debate cívico"></iframe>
+      </div>
+      <p style="margin-top:12px"><a class="btn ghost" href="https://drive.google.com/file/d/12NhGUKLL9lTU9WR_GLisVIVCKxUXId1h/view?usp=drivesdk" target="_blank" rel="noopener">↗ Abrir en Google Drive</a></p>
+    </section>
+
+    <section id="evaluacion" class="reveal">
+      <div class="sec-head"><span class="num">09</span><h2>Evaluación de conducta</h2></div>
+      <div class="card" style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Criterio</th><th>Sí</th><th>Observación</th></tr></thead>
+          <tbody id="evalBody"></tbody>
+        </table>
+        <div class="meter"><i id="evalMeter"></i></div>
+        <p style="margin-top:10px;color:var(--muted);font-size:.9rem" id="evalTxt"></p>
+      </div>
+    </section>
+
+    <section id="fuentes" class="reveal">
+      <div class="sec-head"><span class="num">10</span><h2>Fuentes y enlaces oficiales</h2></div>
+      <div class="src-item"><span style="font-size:1.6rem">⚖️</span><div><b>Corte Suprema de Justicia de Panamá</b><br><small>Declaratoria de inconstitucionalidad de la Ley 406 de 2023.</small><br><a href="https://www.organojudicial.gob.pa/noticias/judiciales/csj-declara-inconstitucional-la-ley-406-de-20-de-octubre-de-2023" target="_blank" rel="noopener">Órgano Judicial de Panamá ↗</a></div></div>
+      <div class="src-item"><span style="font-size:1.6rem">🏛</span><div><b>Presidencia de la República de Panamá</b><br><small>Informe Final de la Comisión Interministerial sobre Cobre Panamá, publicado el 30 de septiembre de 2026.</small><br><a href="https://www.presidencia.gob.pa/publicacion/la-comision-interministerial-entrego-al-presidente-de-la-republica-el-informe-final-sobre-el-sitio-minero-cobre-panama-y-el-documento-se-publico-el-mismo-dia" target="_blank" rel="noopener">Presidencia de Panamá ↗</a></div></div>
+      <div class="src-item"><span style="font-size:1.6rem">🌿</span><div><b>Ministerio de Ambiente de Panamá</b><br><small>Monitoreo y vigilancia ambiental; Plan de Cierre Ordenado y recomendaciones ambientales.</small><br><a href="https://miambiente.gob.pa/cientificos-panamenos-vigilan-la-mina-de-donoso-de-forma-permanente-y-exigen-que-se-corrija-lo-que-la-auditoria-encontro/" target="_blank" rel="noopener">MiAmbiente – Monitoreo de Cobre Panamá ↗</a></div></div>
+    </section>
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div><h4>⚖ Debate Cívico</h4><p>Simulación de debate sobre el cierre ordenado de Cobre Panamá. Análisis ambiental, jurídico, económico y social con información verificable.</p></div>
+    <div><h4>Sobre este sitio</h4><p>Este sitio fue diseñado por <b style="color:var(--text)">Rafael González, Lic. en Ciberseguridad</b>, con el propósito de presentar y visualizar de forma clara el contenido del debate cívico sobre el cierre ordenado de Cobre Panamá: los argumentos, las posiciones, las conclusiones y las fuentes oficiales consultadas.</p></div>
+    <div><h4>Navegación</h4><ul><li><a href="#tema">Tema central</a></li><li><a href="#debate">Debate</a></li><li><a href="#fuentes">Fuentes</a></li></ul></div>
+    <div><h4>Equipo</h4><ul><li>Ariatnee Ramos</li><li>Lariza Rodríguez</li><li>Rafael González</li><li>Yuleimy</li></ul></div>
+    <div><h4>Contacto</h4><ul><li>📱 WhatsApp: <a href="https://wa.me/50767600882" target="_blank" rel="noopener">6760-0882</a></li><li>📍 Panamá</li></ul></div>
+  </div>
+  <div class="copy"><span>© 2026 Proyecto Final · Debate Cívico</span><span>Diseñado por Rafael González · Lic. en Ciberseguridad</span></div>
+</footer>
+
+<!-- WHATSAPP + TOP -->
+<a class="wa-float" href="https://wa.me/50767600882?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20debate%20c%C3%ADvico" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 3C9 3 3.3 8.6 3.3 15.5c0 2.4.7 4.7 1.9 6.6L3 29l7.1-2.1c1.8 1 3.8 1.500 5.900 1.500 7 0 12.700-5.600 12.700-12.500S23 3 16 3zm0 22.800c-1.900 0-3.700-.5-5.300-1.500l-.4-.2-4.200 1.200 1.300-4-.3-.4a10 10 0 0 1-1.600-5.400C5.500 9.900 10.200 5.400 16 5.400s10.500 4.500 10.500 10.100S21.800 25.800 16 25.800zm5.800-7.500c-.3-.2-1.900-.9-2.200-1s-.5-.2-.7.200-.8 1-1 1.200-.4.200-.7.100a8.600 8.600 0 0 1-4.300-3.700c-.3-.6.300-.5.900-1.700.1-.2 0-.4 0-.5l-1-2.300c-.2-.6-.5-.5-.7-.5h-.6a1.200 1.200 0 0 0-.9.400 3.800 3.800 0 0 0-1.200 2.800c0 1.600 1.200 3.200 1.300 3.400s2.300 3.500 5.600 4.900c2.100.9 2.900.9 3.900.8.600-.1 1.900-.8 2.200-1.500s.3-1.400.2-1.500-.3-.2-.6-.4z"/></svg>
+  <span>WhatsApp 6760-0882</span>
+</a>
+<button class="icon-btn" id="toTop" aria-label="Subir">↑</button>
+
+<script>
+const $ = (s, c=document) => c.querySelector(s);
+const $$ = (s, c=document) => [...c.querySelectorAll(s)];
+
+/* ===== Tema ===== */
+const root = document.documentElement;
+try { const t = localStorage.getItem('theme'); if (t) root.dataset.theme = t; } catch(e){}
+const themeBtn = $('#themeBtn');
+const paintTheme = () => themeBtn.textContent = root.dataset.theme === 'dark' ? '🌙' : '☀️';
+paintTheme();
+themeBtn.onclick = () => {
+  root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  try { localStorage.setItem('theme', root.dataset.theme); } catch(e){}
+  paintTheme();
+};
+
+/* ===== Menú móvil ===== */
+$('#burger').onclick = () => $('#menu').classList.toggle('open');
+$$('#menu a').forEach(a => a.onclick = () => $('#menu').classList.remove('open'));
+
+/* ===== Texto animado ===== */
+const frases = ['> Ambiental · monitoreo y restauración','> Jurídico · Ley 406 y Corte Suprema','> Económico · costos, empleo y finanzas','> Social · comunidades y trabajadores','> Transparencia · información verificable'];
+let fi = 0, ci = 0, borrando = false;
+(function tipear(){
+  const el = $('#typing'), f = frases[fi];
+  el.textContent = f.slice(0, ci);
+  if (!borrando && ci === f.length) { borrando = true; return setTimeout(tipear, 1500); }
+  if (borrando && ci === 0) { borrando = false; fi = (fi+1) % frases.length; }
+  ci += borrando ? -1 : 1;
+  setTimeout(tipear, borrando ? 25 : 55);
+})();
+
+/* ===== Contadores ===== */
+const countObs = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  const el = e.target, meta = +el.dataset.count; let n = 0;
+  const id = setInterval(() => { n++; el.textContent = n; if (n >= meta) clearInterval(id); }, 140);
+  countObs.unobserve(el);
+}), {threshold:.6});
+$$('[data-count]').forEach(el => countObs.observe(el));
+
+/* ===== Fondo de partículas ===== */
+(function(){
+  const cv = $('#bg-canvas'), ctx = cv.getContext('2d'); let W, H, pts = [];
+  const mouse = {x:-999,y:-999};
+  const size = () => { W = cv.width = cv.offsetWidth; H = cv.height = cv.offsetHeight;
+    pts = Array.from({length: Math.min(90, Math.floor(W/14))}, () => ({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5})); };
+  size(); addEventListener('resize', size);
+  addEventListener('mousemove', e => { const r = cv.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; });
+  (function draw(){
+    ctx.clearRect(0,0,W,H);
+    const col = getComputedStyle(root).getPropertyValue('--accent').trim() || '#3ddc97';
+    pts.forEach((p,i) => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x<0||p.x>W) p.vx*=-1; if (p.y<0||p.y>H) p.vy*=-1;
+      ctx.beginPath(); ctx.arc(p.x,p.y,2,0,6.28); ctx.fillStyle = col; ctx.fill();
+      for (let j=i+1;j<pts.length;j++){
+        const q = pts[j], d = Math.hypot(p.x-q.x,p.y-q.y);
+        if (d<120){ ctx.strokeStyle = col; ctx.globalAlpha = (1-d/120)*.35; ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.stroke(); ctx.globalAlpha = 1; }
+      }
+      const dm = Math.hypot(p.x-mouse.x,p.y-mouse.y);
+      if (dm<150){ ctx.strokeStyle = col; ctx.globalAlpha = .6; ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(mouse.x,mouse.y); ctx.stroke(); ctx.globalAlpha = 1; }
+    });
+    requestAnimationFrame(draw);
+  })();
+})();
+
+/* ===== Reveal + scroll-spy + progreso ===== */
+const revObs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }), {threshold:.08});
+$$('.reveal').forEach(el => revObs.observe(el));
+
+const secs = $$('main section');
+const links = $$('#toc a, #menu a');
+function onScroll(){
+  const h = document.documentElement;
+  const pct = Math.min(100, Math.round(h.scrollTop / (h.scrollHeight - h.clientHeight) * 100)) || 0;
+  $('#progress').style.width = pct + '%';
+  $('#pct').textContent = pct; $('#readMeter').style.width = pct + '%';
+  $('#toTop').classList.toggle('show', h.scrollTop > 700);
+  let cur = '';
+  secs.forEach(s => { if (s.getBoundingClientRect().top < 160) cur = s.id; });
+  links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+}
+addEventListener('scroll', onScroll, {passive:true}); onScroll();
+$('#toTop').onclick = () => scrollTo({top:0, behavior:'smooth'});
+$('#readTime').textContent = Math.max(1, Math.round($('#content').innerText.split(/\s+/).length / 200));
+
+/* ===== Tabs ===== */
+$$('.tab').forEach(t => t.onclick = () => {
+  $$('.tab').forEach(x => x.classList.toggle('on', x === t));
+  $$('.tab-panel').forEach(p => p.classList.toggle('on', p.id === t.dataset.tab));
+});
+
+/* ===== Chat por scroll ===== */
+const msgObs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { setTimeout(() => e.target.classList.add('show'), 120); msgObs.unobserve(e.target); }
+}), {threshold:.3});
+$$('.msg').forEach(m => msgObs.observe(m));
+
+/* ===== Acordeón ===== */
+$$('.acc').forEach(a => {
+  const body = $('.body', a);
+  if (a.classList.contains('open')) body.style.maxHeight = body.scrollHeight + 40 + 'px';
+  $('button', a).onclick = () => {
+    const open = a.classList.toggle('open');
+    body.style.maxHeight = open ? body.scrollHeight + 40 + 'px' : 0;
+  };
+});
+
+/* ===== Evaluación de conducta ===== */
+const criterios = [
+  ['Respetaron los turnos','Se respetó la participación'],
+  ['Escucharon al otro participante','Hubo atención'],
+  ['Evitaron ataques personales','Debate respetuoso'],
+  ['Utilizaron argumentos','Se presentaron razones'],
+  ['Utilizaron fuentes','Se utilizaron fuentes oficiales'],
+  ['Respondieron preguntas','Se respondieron las preguntas'],
+  ['Mantuvieron lenguaje adecuado','Lenguaje académico']
+];
+$('#evalBody').innerHTML = criterios.map((c,i) => `<tr><td>${c[0]}</td><td><input class="chk" type="checkbox" checked data-i="${i}"></td><td>${c[1]}</td></tr>`).join('');
+function evalUpdate(){
+  const n = $$('.chk').filter(c => c.checked).length, p = Math.round(n / criterios.length * 100);
+  $('#evalMeter').style.width = p + '%';
+  $('#evalTxt').textContent = `${n} de ${criterios.length} criterios cumplidos (${p}%).`;
+}
+$$('.chk').forEach(c => c.onchange = evalUpdate); evalUpdate();
+
+</script>
+</body>
+</html>
